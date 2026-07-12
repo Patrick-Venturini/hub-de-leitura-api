@@ -36,7 +36,9 @@ pipeline {
         stage('Instalar dependencias dos testes') {
             steps {
                 dir('task-hub-de-leitura-api-cypress-test') {
-                    bat 'call npm install'
+                    bat '''
+                        call npm install
+                    '''
                 }
             }
         }
@@ -44,7 +46,7 @@ pipeline {
         stage('Executar os testes da API') {
             steps {
                 dir('task-hub-de-leitura-api-cypress-test') {
-                    bat 'call npx cypress run'
+                    bat 'call npm test'
                 }
             }
         }
