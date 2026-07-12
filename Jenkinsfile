@@ -26,12 +26,10 @@ pipeline {
 
         stage('Clonar projeto de teste') {
             steps {
-                dir('hub-de-leitura-api') {
                     bat '''
                         if exist task-hub-de-leitura-api-cypress-test rmdir /s /q task-hub-de-leitura-api-cypress-test
                         git clone https://github.com/Patrick-Venturini/task-hub-de-leitura-api-cypress-test.git
                     '''
-                }
             }
         }
 
@@ -55,11 +53,11 @@ pipeline {
     post {
         always {
             dir('task-hub-de-leitura-api-cypress-test') {
-                archiveArtifact artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'cypress/videos/**/*.*,cypress/screenshots/**/*.*', allowEmptyArchive: true
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-report']]
             }
 
-            bat 'taskill /F /IM node.exe || exit 0'
+            bat 'taskkill /F /IM node.exe || exit 0'
         }
     }
 }
